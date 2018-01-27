@@ -1,5 +1,13 @@
 var express = require('express');
 var path = require('path');
+var mongoose = require('mongoose');
+var mongoDB = 'mongodb://admin:admin@ds033153.mlab.com:33153/reduxappwithexpress';
+mongoose.connect(mongoDB, {
+  useMongoClient: true
+})
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'MongoDB connection error'));
+
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
