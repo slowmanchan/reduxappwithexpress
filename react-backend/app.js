@@ -1,10 +1,8 @@
 var express = require('express');
 var path = require('path');
 var mongoose = require('mongoose');
-var mongoDB = 'mongodb://admin:admin@ds033153.mlab.com:33153/reduxappwithexpress';
-mongoose.connect(mongoDB, {
-  useMongoClient: true
-})
+var mongoDB = 'mongodb://admin:admin@ds033153.mlab.com:33153/reduxwithexpress';
+mongoose.connect(mongoDB)
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error'));
 
@@ -15,6 +13,7 @@ var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
+var todos = require('./routes/todos');
 
 var app = express();
 
@@ -32,6 +31,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
+app.use('/todos', todos);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

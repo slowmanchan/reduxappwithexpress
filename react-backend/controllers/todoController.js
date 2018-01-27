@@ -14,3 +14,7 @@ exports.todo_create_post = function(req, res) {
     console.log(todo);
   });
 }
+
+exports.todo_get_all = function(req, res) {
+  console.log('all todos')
+}
