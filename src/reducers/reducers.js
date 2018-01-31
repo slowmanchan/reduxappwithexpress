@@ -1,45 +1,51 @@
-import { combineReducers } from 'redux'
+import { combineReducers } from 'redux';
 import {
-  SELECT_TODO,
-  REQUEST_TODOS,
-  RECEIVE_TODOS
-} from '../actions'
+  ADD_TODO,
+  TOGGLE_TODO,
+  SET_VISIBILITY_FILTER,
+  VisibilityFilters
+} from '../actions/todoActions';
 
-function selectedTodo(state = 'reactjs', action) {
+const { SHOW_ALL } = VisibilityFilters
+
+function visibilityFilter(state = SHOW_ALL, action) {
   switch (action.type) {
-    case SELECT_TODO:
-      return action.todo
-      break;
+    case SET_VISIBILITY_FILTER:
+      return action.filter
     default:
       return state
   }
 }
 
-
-function todos(
-  state = {
-    isFetching: false,
-    items: []
-  },
-  action
-) {
+function todos(state = [], action) {
   switch (action.type) {
-    case REQUEST_TODOS:
-      return Object.assign({}, state, {
-        isFetching: true
+    case ADD_TODO:
+      return [
+        ...state,
+        {
+          id: action.id,
+          text: action.text,
+          completed: false
+        }
+      ]
+
+    case TOGGLE_TODO:
+      return state.map((todo, index) => {
+        if (index === action.index) {
+          return Object.assign({}, todo, {
+            completed: !todo.completed
+          })
+        }
+        return todo
       })
-    case RECEIVE_TODOS
-      return Object.assign({}, state, {
-        isFetching: false,
-        items: actions.todos
-      })
-      break;
     default:
       return state
-
   }
 }
 
-const rootReducer = combineReducers({
-  
+const todoApp = combineReducers({
+  visibilityFilter,
+  todos
 })
+
+export default todoApp
