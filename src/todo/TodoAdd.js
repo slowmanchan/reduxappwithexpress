@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Button, Icon, Form } from 'semantic-ui-react';
 
 class TodoAdd extends Component {
   constructor() {
@@ -20,34 +21,41 @@ class TodoAdd extends Component {
   }
 
   handleSubmit(e) {
-    alert('Title: ' + this.state.title + ' Content: ' + this.state.content);
-    fetch('/todos', {
-      method: 'POST',
-      body: JSON.stringify(this.state),
-      headers: new Headers({
-        'Content-Type': 'application/json'
-      })
-    })
-    .catch(error => console.error('Error:', error))
-    .then(response => console.log('Success:', response));
-
     e.preventDefault();
+    this.props.addData(this.state.title, this.state.content)
+    this.setState(Object.assign({}, this.state, {title: '', content: ''}))
+
   }
+
+
 
   render() {
     return(
-      <form onSubmit={this.handleSubmit}>
-        <label>
-          Title:
-          <input type='text' value={this.state.title} onChange={this.handleChangeTitle} />
-        </label>
-        <label>
-          Content:
-          <textarea type='text' value={this.state.content} onChange={this.handleChangeContent}>
-          </textarea>
-        </label>
-        <input type='submit' value='Submit' />
-      </form>
+      <Form>
+        <Form.Group widths='equal'>
+          <Form.Input fluid
+            label='Title'
+            size='massive'
+            placeholder='Title your thoughts...'
+            value={this.state.title}
+            onChange={this.handleChangeTitle}
+            onSubmit={this.handleSubmit}
+          />
+          <Form.TextArea
+            label='Content'
+            placeholder='Tell us something'
+            value={this.state.content}
+            onChange={this.handleChangeContent}
+          />
+        </Form.Group>
+
+        <Button animated>
+          <Button.Content visible>Add Todo</Button.Content>
+          <Button.Content hidden>
+            <Icon name='up arrow' />
+          </Button.Content>
+        </Button>
+        </Form>
     )
   }
 }
