@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Icon, Grid, Segment } from 'semantic-ui-react';
+import { Card, Icon, Grid, Segment, Label, Header } from 'semantic-ui-react';
 import TodoAdd from './TodoAdd';
 import axios from 'axios';
 import SidebarLeftOverlay from './SidebarLeftOverlay'
@@ -43,11 +43,15 @@ class TodoList extends Component {
       return(
             <Grid.Column>
 
-               <Card>
-                 <Card.Content header={todo.title} />
-                 <Card.Content description={todo.content} />
-                 <Card.Content description={todo.date} />
-               </Card>
+
+                 <Segment>
+                 <Label as='a' color='blue' ribbon>Notebook</Label>
+                 <Header as='h3' dividing>{todo.title}</Header>
+                 {todo.content}
+                 <br/>
+                 {todo.date}
+                 </Segment>
+
 
              </Grid.Column>
              )}
@@ -61,9 +65,7 @@ class TodoList extends Component {
         <TodoAdd addData={this.addData} />
         <Grid>
           <Grid.Row columns={3 }>
-
                 {todos}
-
           </Grid.Row>
         </Grid></div>}/>
 
