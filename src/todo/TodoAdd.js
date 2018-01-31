@@ -31,15 +31,18 @@ class TodoAdd extends Component {
 
   render() {
     return(
-      <Form>
-        <Form.Group widths='equal'>
+      <Form   onSubmit={this.handleSubmit}>
+        <Form.Group
+          widths='equal'
+
+        >
           <Form.Input fluid
             label='Title'
-            size='massive'
+
             placeholder='Title your thoughts...'
             value={this.state.title}
             onChange={this.handleChangeTitle}
-            onSubmit={this.handleSubmit}
+
           />
           <Form.TextArea
             label='Content'
@@ -49,7 +52,7 @@ class TodoAdd extends Component {
           />
         </Form.Group>
 
-        <Button animated>
+        <Button type='submit' animated>
           <Button.Content visible>Add Todo</Button.Content>
           <Button.Content hidden>
             <Icon name='up arrow' />

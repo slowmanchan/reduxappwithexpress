@@ -46,11 +46,12 @@ class TodoList extends Component {
                <Card>
                  <Card.Content header={todo.title} />
                  <Card.Content description={todo.content} />
+                 <Card.Content description={todo.date} />
                </Card>
 
              </Grid.Column>
              )}
-    )
+    ).reverse()
 
     console.log(todos)
 
