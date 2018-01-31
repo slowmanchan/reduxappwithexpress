@@ -10,26 +10,26 @@ var Todo = require('../models/todo');
 router.post('/', function(req, res, next) {
   var todo = new Todo({
     title: req.body.title,
-    content: req.body.content
+    content: req.body.content,
+    date: new Date()
   })
-
-  console.log('Todo: ' + todo);
 
   todo.save(function(err) {
     if(err) { return next(err); }
-
-    console.log(todo);
+    console.log('saved: ' + todo)
+    res.json(todo)
   });
+
+
 })
 
 router.get('/', function(req, res, next) {
-  res.json([{
-    id: 1,
-    username: "norman"
-  }, {
-    id: 2,
-    username: "Chanman"
-  }])
+  Todo.find({})
+    .exec(function(err, todos) {
+      if(err) {return next(err);}
+
+      res.json(todos)
+    })
 })
 
 module.exports = router;
