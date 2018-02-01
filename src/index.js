@@ -8,8 +8,9 @@ import 'semantic-ui-css/semantic.min.css';
 import { createStore } from 'redux'
 import todoApp from './reducers/reducers'
 import { Provider } from 'react-redux';
+import configureStore from './configureStore'
 
-let store = createStore(todoApp)
+const store = configureStore()
 
 render(
   <Provider store={store}>

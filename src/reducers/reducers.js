@@ -3,7 +3,9 @@ import {
   ADD_TODO,
   TOGGLE_TODO,
   SET_VISIBILITY_FILTER,
-  VisibilityFilters
+  VisibilityFilters,
+  RECEIVE_TODOS,
+  REQUEST_TODOS
 } from '../actions/todoActions';
 
 const { SHOW_ALL } = VisibilityFilters
@@ -43,8 +45,44 @@ function todos(state = [], action) {
   }
 }
 
+function posts(
+  state = {
+    isFetching: false,
+    items: []
+  },
+  action
+) {
+  switch (action.type) {
+    case REQUEST_TODOS:
+      return Object.assign({}, state, {
+        isFetching: true,
+      })
+    case RECEIVE_TODOS:
+      return Object.assign({}, state, {
+        isFetching: false,
+        items: action.posts,
+        lastUpdated: action.receivedAt
+      })
+    default:
+      return state
+  }
+}
+
+// function postsByTodoType(state = {}, action) {
+//   switch (action.type) {
+//     case RECEIVE_TODOS:
+//     case REQUEST_TODOS:
+//       return Object.assign({}, state, {
+//         [action.todoType]: posts(state[action.todoType], action)
+//       })
+//     default:
+//       return state
+//   }
+// }
+
 const todoApp = combineReducers({
   visibilityFilter,
+  posts,
   todos
 })
 
